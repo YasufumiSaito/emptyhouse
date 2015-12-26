@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Japan Empty Houses</title>
+	<link rel="stylesheet" href="main.css">
+	<script type="text/javascript" src="d3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.7.0/d3-legend.min.js"></script>
+	<style>
+		 /* Styling for new <div> */
+		#tooltip {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 10;
+			margin: 0;
+			padding: 10px;
+			width: 200px;
+			height: 70px;
+			color: white;
+			font-family: sans-serif;
+			font-size: 1.2em;
+			font-weight: bold;
+			text-align: center;
+			background-color: rgba(0, 0, 0, 0.55);
+			opacity: 0;
+			pointer-events: none;
+			border-radius:5px;
+			transition: .2s;
+		}
+
+		.legendLinear 
+		 {
+			font-family: "Lato";
+			fill:#c2b59b;
+		}
+
+		.legendTitle {
+			font-size: 1em;
+		}
+
+		span {
+			color:#fac863;
+			font-weight: bold;
+			/*font-size:1.5em;*/
+		}
+
+		a {
+			text-decoration:underline;
+			color:#c2b59b;
+		}
+	
+	</style>
+	<link href='https://fonts.googleapis.com/css?family=Lato:900,400,300' rel='stylesheet' type='text/css'>
+	<meta property="og:image" content="emptyhouse.png" />
+	<meta name="description" content="An interactive visualization for the situation of vacant homes in aging Japan." />
+	<meta property="og:title" content="Visualising Japanese Empty Houses" />
+	<meta property="og:url" content="https://YasufumiSaito.github.io/emptyhouse/" />
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@yas104">
+	<meta name="twitter:creator" content="@yas104">
+	<meta name="twitter:title" content="Visualizing Japanese Empty Houses">
+	<meta name="twitter:description" content="An interactive visualization for the situation of vacant homes in aging Japan.">
+	<meta name="twitter:image:src" content="emptyhouse.png">
+
+</head>
+<body>
+
+	<div id="header">
+		<div class="onoffswitch">
+		    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" value="off" checked>
+			    <label class="onoffswitch-label" for="myonoffswitch">
+			        <span class="onoffswitch-inner"></span>
+			        <span class="onoffswitch-switch"></span>
+			    </label>
+		</div>
+	</div>
+	
+
+	<div id="intro" class="en">
+
+		<h1 id="head" class="en">Japanese Empty Houses</h1>
+		<div id="story" class="en">
+			<p>In rapidly aging Japan, there are about <span>8.2 million</span> vacant homes, which account for <span>13.5%</span> of all the residential buildings. The ratio marked an all time high.</p>
+			<p>As the map below shows, the problem is ahead worsened in rural areas, where generally the elderly ratio is higher than urban regions. </p>
+		</div>
+
+	</div>
+
+	<div id="intro" class="jp">
+
+		<h1 id="head_jp" class="jp">日本の空き家率</h1>
+		<div id="story" class="jp">
+			<p>少子高齢化が急速に進む日本では<span>約８２０万戸</span>の住宅が家主を失っている。最新の政府統計によると、全住宅に占める空き家率は<span>１３．５％</span>と過去最高を記録した。</p>
+			<p>以下の図が示すように、都市圏よりも高齢化が進む地方で先に問題が深刻化している。</p>
+		</div>
+
+	</div>
+
+	
+	<div id="container">
+		<div id="tooltip">
+		</div>
+	</div>
+
+	<div id="intro" class="en">
+
+		<div id="story" class="en">
+			<p>More than half of the empty houses, in fact, were acquired through inheritance, meaning they were supposed to be assets in the old days. But now many successors cannot utilize them because the houses are too old and low valued.</p>
+			<p>Houses would no longer be assets but debts in Japan. The cases that one cannot find buyers are commonplace. <span>A $1,000 apartment</span> in a ski resort--which used to be priced at hundreds of thousands dollars in the 1980s--became a topic recently on the Internet.</p>
+			<p>Besides the population decline, an oversupply of new homes backed by the people's preference tangles the situation further. Nomura Research Institute <a href="https://www.nri.com/~/media/PDF/jp/news/2015/150622_1.pdf" target="_blank">forecast</a> that the empty house rate would increase to <span>30.2%</span> by 2033.</p>
+		</div>
+
+	</div>
+
+	<div id="intro" class="jp">
+
+		<div id="story" class="jp">
+			<p>実は空き家の過半数が”相続”した住宅だ。昔なら地元に残った親族に引き継がれていた資産だろう。しかし、古さや立地などが足かせになって賃貸や売却ができず、処分の判断を保留したまま放置するケースが増えている。</p>
+			<p>現代日本では家は資産から負債に変わりつつあるのかもしれない。買い手がつかないという嘆き声はもはや珍しくない。かつては数千万円したスキー場のリゾートマンションが<span>１０万円</span>で売られているーという話はネットでも話題になった。</p>
+			<p>増える空き家の背景には、人口減少に加え、”新築信仰”などによる住宅の供給過剰もある。野村総合研究所は２０３３年に空き家率が<span>３０．２％</span>に達する可能性があると<a href="https://www.nri.com/~/media/PDF/jp/news/2015/150622_1.pdf" target="_blank">予測</a>している。</p>
+		</div>
+
+	</div>
+
+	<div id="footer">
+
+	    <div id="colophon">
+	      DATA SOURCE <a href="http://www.e-stat.go.jp/SG1/estat/List.do?bid=000001051892" target="_blank">Statistics Bureau at Ministry of Internal Affairs and Communications</a><br/>
+	      CREATED BY <a href="http://yasufumisaito.github.io/" target="_blank">&nbsp;Yasufumi Saito</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://twitter.com/yas104" target="_blank">@yas104</a>&nbsp;&nbsp;
+	      <br />
+	      
+	      SHARE THIS ON <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://YasufumiSaito.github.io/emptyhouse/">&nbsp;FACEBOOK</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank "href="https://twitter.com/intent/tweet?text=Check this DataVis%20via%20@yas104%20https://YasufumiSaito.github.io/emptyhouse/">TWITTER</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank" href="https://www.linkedin.com/shareArticle?url=https://YasufumiSaito.github.io/emptyhouse/">LINKEDIN</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a target="_blank" href="http://b.hatena.ne.jp/add?url=https://YasufumiSaito.github.io/emptyhouse/">HATENA</a>
+	    </div>
+
+	</div>
+
+	<!-- Language Change -->
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script>
+	$(".jp").css("display", "none");
+	$("#myonoffswitch").click(function(){
+		$(".en").toggle();
+		$(".jp").toggle();	
+	});
+	</script>
+	
+	<script src="myScript.js"></script>	
+</body>
+</html>
